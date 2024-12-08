@@ -24,6 +24,7 @@ public class ExcepTest {
             i.printStackTrace();
         }
 
+        // 5.3.4: The Finally Blocks
         int a[] = new int[2];
 		try {
 			System.out.println("Access element three :" + a[3]);
