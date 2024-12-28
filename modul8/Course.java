@@ -25,9 +25,9 @@ public class Course {
         return courseRecords.elements();
     }
 
-    // Print all students in the course
+    // Cetak semua siswa dalam kursus
     public void printCourseStudents() {
-        System.out.println("Students enrolled in course: " + title);
+        System.out.println("Siswa yang terdaftar dalam kursus: " + title);
         Enumeration<CourseRecord> records = courseRecords.elements();
         while (records.hasMoreElements()) {
             CourseRecord cr = records.nextElement();
@@ -35,12 +35,12 @@ public class Course {
             if (student != null) {
                 System.out.println("- " + student.getName());
             } else {
-                System.out.println("- Unnamed student");
+                System.out.println("- Siswa tanpa nama");
             }
         }
     }
 
-    // Print the student with the best average mark
+    // Cetak siswa dengan nilai rata-rata terbaik
     public void printBestStudent() {
         double highestAverage = -1;
         Student bestStudent = null;
@@ -58,7 +58,7 @@ public class Course {
                     totalMarks += assignment.getMark();
                     count++;
                 } catch (NotYetSetException e) {
-                    // Skip assignments without marks
+                    // Lewati tugas tanpa nilai
                 }
             }
 
@@ -72,15 +72,15 @@ public class Course {
         }
 
         if (bestStudent != null) {
-            System.out.println("Best student in course " + title + ": " + bestStudent.getName() + " with an average mark of " + highestAverage);
+            System.out.println("Siswa terbaik dalam kursus " + title + ": " + bestStudent.getName() + " dengan nilai rata-rata " + highestAverage);
         } else {
-            System.out.println("No marks available to determine the best student.");
+            System.out.println("Tidak ada nilai yang tersedia untuk menentukan siswa terbaik.");
         }
     }
 
-    // Print students eligible for the final exam
+    // Cetak siswa yang memenuhi syarat untuk ujian akhir
     public void printFinalExamStudents() {
-        System.out.println("Students eligible for the final exam in course: " + title);
+        System.out.println("Siswa yang memenuhi syarat untuk ujian akhir dalam kursus: " + title);
 
         Enumeration<CourseRecord> records = courseRecords.elements();
         while (records.hasMoreElements()) {
@@ -91,74 +91,21 @@ public class Course {
             while (assignments.hasMoreElements()) {
                 Assignment assignment = assignments.nextElement();
                 try {
-                    assignment.getMark(); // Check if the mark is set
+                    assignment.getMark(); // Periksa apakah nilai sudah diatur
                     count++;
                 } catch (NotYetSetException e) {
-                    // Skip assignments without marks
+                    // Lewati tugas tanpa nilai
                 }
             }
 
-            if (count > 0) { // At least one assignment has a mark
+            if (count > 0) { // Setidaknya satu tugas memiliki nilai
                 Student student = cr.getStudent();
                 if (student != null) {
                     System.out.println("- " + student.getName());
                 } else {
-                    System.out.println("- Unnamed student");
+                    System.out.println("- Siswa tanpa nama");
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-        // Create course
-        Course course = new Course();
-        course.setTitle("Object-Oriented Programming");
-
-        // Create students
-        Student student1 = new Student();
-        student1.setName("Alice");
-
-        Student student2 = new Student();
-        student2.setName("Bob");
-
-        // Create course records
-        CourseRecord record1 = new CourseRecord();
-        record1.setStudent(student1);
-
-        CourseRecord record2 = new CourseRecord();
-        record2.setStudent(student2);
-
-        // Create assignments
-        Assignment assignment1 = new Assignment();
-        assignment1.setMark(85);
-
-        Assignment assignment2 = new Assignment();
-        assignment2.setMark(90);
-
-        Assignment assignment3 = new Assignment();
-        assignment3.setMark(78);
-
-        Assignment assignment4 = new Assignment();
-        assignment4.setMark(88);
-
-        // Add assignments to course records
-        record1.addAssignment(assignment1);
-        record1.addAssignment(assignment2);
-
-        record2.addAssignment(assignment3);
-        record2.addAssignment(assignment4);
-
-        // Add course records to course
-        course.addCourseRecord(record1);
-        course.addCourseRecord(record2);
-
-        // Print students in the course
-        course.printCourseStudents();
-
-        // Print the best student
-        course.printBestStudent();
-
-        // Print students eligible for the final exam
-        course.printFinalExamStudents();
     }
 }

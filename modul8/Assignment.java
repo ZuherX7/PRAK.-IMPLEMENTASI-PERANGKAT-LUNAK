@@ -4,7 +4,7 @@ public class Assignment {
     public double getMark() throws NotYetSetException {
         if (mark==-1) {
             throw new
-            NotYetSetException("Mark is not yet set");
+            NotYetSetException("Nilai belum diatur");
         }
         return mark;
     }
