@@ -1,232 +1,76 @@
 package tugas8;
 
 import java.util.Scanner;
-import java.util.HashMap;
 
-// Abstract Class: Shape
-abstract class Shape {
-    abstract void draw();
-    abstract void erase();
-    abstract void move();
-    abstract void resize();
-}
-
-// Entity Class: Point
-class Point {
-    int x, y;
-
-    public Point(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
-// Entity Class: Circle
-class Circle extends Shape {
-    private double radius;
-    private Point center;
-
-    public Circle(double radius, Point center) {
-        this.radius = radius;
-        this.center = center;
-    }
-
-    @Override
-    void draw() {
-        System.out.println("Drawing Circle at (" + center.x + ", " + center.y + ") with radius " + radius);
-    }
-
-    @Override
-    void erase() {
-        System.out.println("Erasing Circle");
-    }
-
-    @Override
-    void move() {
-        System.out.println("Moving Circle");
-    }
-
-    @Override
-    void resize() {
-        System.out.println("Resizing Circle");
-    }
-
-    public double area() {
-        return Math.PI * radius * radius;
-    }
-
-    public double circum() {
-        return 2 * Math.PI * radius;
-    }
-
-    public void setCenter(int x, int y) {
-        this.center = new Point(x, y);
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
-}
-
-// Entity Class: Rectangle
-class Rectangle extends Shape {
-    @Override
-    void draw() {
-        System.out.println("Drawing Rectangle");
-    }
-
-    @Override
-    void erase() {
-        System.out.println("Erasing Rectangle");
-    }
-
-    @Override
-    void move() {
-        System.out.println("Moving Rectangle");
-    }
-
-    @Override
-    void resize() {
-        System.out.println("Resizing Rectangle");
-    }
-}
-
-// Entity Class: Polygon
-class Polygon extends Shape {
-    @Override
-    void draw() {
-        System.out.println("Drawing Polygon");
-    }
-
-    @Override
-    void erase() {
-        System.out.println("Erasing Polygon");
-    }
-
-    @Override
-    void move() {
-        System.out.println("Moving Polygon");
-    }
-
-    @Override
-    void resize() {
-        System.out.println("Resizing Polygon");
-    }
-}
-
-// Boundary Class: Window
-class Window {
-    public void open() {
-        System.out.println("Window Opened");
-    }
-
-    public void close() {
-        System.out.println("Window Closed");
-    }
-
-    public void move() {
-        System.out.println("Window Moved");
-    }
-
-    public void display() {
-        System.out.println("Window Displayed");
-    }
-
-    public void handleEvent(String event) {
-        System.out.println("Handling Event: " + event);
-    }
-}
-
-// Control Class: DrawingContext
-class DrawingContext {
-    public Point setPoint(int x, int y) {
-        return new Point(x, y);
-    }
-
-    public void clearScreen() {
-        System.out.println("Screen Cleared");
-    }
-
-    public int getVerticalSize() {
-        System.out.println("Getting Vertical Size");
-        return 800;
-    }
-
-    public int getHorizontalSize() {
-        System.out.println("Getting Horizontal Size");
-        return 600;
-    }
-}
-
-// Control Class: DataController
-class DataController {
-    private HashMap<String, Object> data;
-
-    public DataController() {
-        data = new HashMap<>();
-    }
-
-    public void addData(String key, Object value) {
-        data.put(key, value);
-    }
-
-    public Object getData(String key) {
-        return data.get(key);
-    }
-}
-
-// Testing the Classes
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Create a Point
-        System.out.println("Enter the center coordinates for the Circle (x y):");
-        int x = scanner.nextInt();
-        int y = scanner.nextInt();
-        Point center = new Point(x, y);
+        System.out.println("Selamat datang di Sistem Manajemen Bentuk!");
+        System.out.println("Pilih opsi:");
+        System.out.println("1. Buat Lingkaran");
+        System.out.println("2. Buat Persegi Panjang");
+        System.out.println("3. Buat Poligon");
+        System.out.println("4. Keluar");
 
-        // Create a Circle
-        System.out.println("Enter the radius of the Circle:");
-        double radius = scanner.nextDouble();
-        Circle circle = new Circle(radius, center);
-        circle.draw();
-        System.out.println("Area: " + circle.area());
-        System.out.println("Circumference: " + circle.circum());
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Bersihkan buffer
 
-        // Move and resize Circle
-        System.out.println("Enter new center coordinates for the Circle (x y):");
-        x = scanner.nextInt();
-        y = scanner.nextInt();
-        circle.setCenter(x, y);
+        switch (choice) {
+            case 1:
+                System.out.println("Masukkan koordinat pusat (x y): ");
+                double centerX = scanner.nextDouble();
+                double centerY = scanner.nextDouble();
 
-        System.out.println("Enter new radius for the Circle:");
-        radius = scanner.nextDouble();
-        circle.setRadius(radius);
+                System.out.println("Masukkan radius: ");
+                float radius = scanner.nextFloat();
 
-        circle.draw();
+                Circle circle = new Circle(radius, new Point(centerX, centerY));
+                System.out.println("Lingkaran dibuat!");
+                System.out.println("Luas: " + circle.area());
+                System.out.println("Keliling: " + circle.circumference());
+                circle.draw();
+                break;
 
-        // Drawing other shapes
-        Rectangle rect = new Rectangle();
-        rect.draw();
+            case 2:
+                System.out.println("Masukkan koordinat pojok kiri atas (x y): ");
+                double topLeftX = scanner.nextDouble();
+                double topLeftY = scanner.nextDouble();
 
-        Polygon poly = new Polygon();
-        poly.draw();
+                System.out.println("Masukkan lebar dan tinggi: ");
+                double width = scanner.nextDouble();
+                double height = scanner.nextDouble();
 
-        // Using Window
-        Window window = new Window();
-        window.open();
-        window.display();
-        window.handleEvent("Click");
+                Rectangle rectangle = new Rectangle(new Point(topLeftX, topLeftY), width, height);
+                System.out.println("Persegi Panjang dibuat!");
+                rectangle.draw();
+                break;
 
-        // Using DrawingContext
-        DrawingContext context = new DrawingContext();
-        System.out.println("Enter point coordinates (x y):");
-        x = scanner.nextInt();
-        y = scanner.nextInt();
-        Point point = context.setPoint(x, y);
-        System.out.println("Point created at (" + point.x + ", " + point.y + ")");
-        context.clearScreen();
+            case 3:
+                System.out.println("Masukkan jumlah titik sudut: ");
+                int numVertices = scanner.nextInt();
+
+                Point[] vertices = new Point[numVertices];
+                for (int i = 0; i < numVertices; i++) {
+                    System.out.println("Masukkan koordinat untuk titik sudut " + (i + 1) + " (x y):");
+                    double vertexX = scanner.nextDouble();
+                    double vertexY = scanner.nextDouble();
+                    vertices[i] = new Point(vertexX, vertexY);
+                }
+
+                Polygon polygon = new Polygon(vertices);
+                System.out.println("Poligon dibuat!");
+                polygon.draw();
+                break;
+
+            case 4:
+                System.out.println("Keluar dari program. Selamat tinggal!");
+                break;
+
+            default:
+                System.out.println("Pilihan tidak valid. Silakan mulai ulang program.");
+                break;
+        }
 
         scanner.close();
     }
